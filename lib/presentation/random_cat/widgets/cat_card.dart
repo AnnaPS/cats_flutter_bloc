@@ -1,16 +1,22 @@
-import 'package:catsapp/repository/model/cat.dart';
 import 'package:flutter/material.dart';
 
 import '../../../catapp_theme.dart';
 
-class Card1 extends StatelessWidget {
-  const Card1({Key? key, required this.cat}) : super(key: key);
+class CatCard extends StatelessWidget {
+  const CatCard(
+      {Key? key,
+      required this.catPhoto,
+      required this.title,
+      required this.origin,
+      required this.description,
+      required this.weight})
+      : super(key: key);
 
-  final String category = 'Editor\'s Choice';
-  final String title = 'The Art of Dough';
-  final String description = 'Learn to make the perfect bread.';
-  final String chef = 'Ana Polo';
-  final Cat cat;
+  final String origin;
+  final String title;
+  final String description;
+  final String weight;
+  final String catPhoto;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class Card1 extends StatelessWidget {
       child: Stack(
         children: [
           Text(
-            category,
+            origin,
             style: CatAppTheme.darkTextTheme.bodyText1,
           ),
           Positioned(
@@ -29,16 +35,22 @@ class Card1 extends StatelessWidget {
             top: 20,
           ),
           Positioned(
-            child: Text(
-              description,
-              style: CatAppTheme.darkTextTheme.bodyText1,
+            child: SizedBox(
+              width: 260,
+              child: Text(
+                description,
+                style: CatAppTheme.darkTextTheme.bodyText1,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.justify,
+              ),
             ),
-            bottom: 30,
+            bottom: 40,
             right: 0,
           ),
           Positioned(
             child: Text(
-              chef,
+              weight,
               style: CatAppTheme.darkTextTheme.bodyText1,
             ),
             bottom: 10,
@@ -53,7 +65,9 @@ class Card1 extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage(cat.url ?? ''),
+          colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.5), BlendMode.dstATop),
+          image: NetworkImage(catPhoto),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.all(Radius.circular(10.0)),

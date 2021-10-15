@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'circle_image.dart';
-import '../../../fooderlich_theme.dart';
+import '../../../catapp_theme.dart';
 
 class AuthorCard extends StatelessWidget {
   // 1
@@ -39,11 +39,11 @@ class AuthorCard extends StatelessWidget {
               children: [
                 Text(
                   authorName,
-                  style: FooderlichTheme.lightTextTheme.headline2,
+                  style: CatAppTheme.lightTextTheme.headline2,
                 ),
                 Text(
                   title,
-                  style: FooderlichTheme.lightTextTheme.headline3,
+                  style: CatAppTheme.lightTextTheme.headline3,
                 )
               ],
             ),

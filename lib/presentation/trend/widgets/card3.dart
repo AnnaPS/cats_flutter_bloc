@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../fooderlich_theme.dart';
+import '../../../catapp_theme.dart';
 
 class Card3 extends StatelessWidget {
   const Card3({Key? key}) : super(key: key);
@@ -39,7 +39,7 @@ class Card3 extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text('Recipe Trends',
-                      style: FooderlichTheme.darkTextTheme.headline2),
+                      style: CatAppTheme.darkTextTheme.headline2),
                   const SizedBox(height: 30),
                 ],
               ),
@@ -51,7 +51,7 @@ class Card3 extends StatelessWidget {
                 children: [
                   Chip(
                     label: Text('Healthy',
-                        style: FooderlichTheme.darkTextTheme.bodyText1),
+                        style: CatAppTheme.darkTextTheme.bodyText1),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
                       print('delete');
@@ -59,7 +59,7 @@ class Card3 extends StatelessWidget {
                   ),
                   Chip(
                     label: Text('Vegan',
-                        style: FooderlichTheme.darkTextTheme.bodyText1),
+                        style: CatAppTheme.darkTextTheme.bodyText1),
                     backgroundColor: Colors.black.withOpacity(0.7),
                     onDeleted: () {
                       print('delete');
@@ -67,7 +67,7 @@ class Card3 extends StatelessWidget {
                   ),
                   Chip(
                     label: Text('Carrots',
-                        style: FooderlichTheme.darkTextTheme.bodyText1),
+                        style: CatAppTheme.darkTextTheme.bodyText1),
                     backgroundColor: Colors.black.withOpacity(0.7),
                   ),
                 ],

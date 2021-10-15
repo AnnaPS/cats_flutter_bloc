@@ -1,6 +1,6 @@
+import '../random_cat/pages/random_cat_page.dart';
 import 'package:flutter/material.dart';
 
-import '../bread/widgets/card1.dart';
 import '../smoothy/widgets/card2.dart';
 import '../trend/widgets/card3.dart';
 
@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
   int _selectedIndex = 0;
 
   static List<Widget> pages = <Widget>[
-    const Card1(),
+    const RandomCatPage(),
     const Card2(),
     const Card3(),
   ];
@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipes',
+        title: Text('Cats App',
             // 2
             style: Theme.of(context).textTheme.headline6),
       ),
@@ -42,8 +42,8 @@ class _HomeState extends State<Home> {
         onTap: _onItemTapped,
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(
-            icon: Icon(Icons.card_giftcard),
-            label: 'Bread',
+            icon: Icon(Icons.all_inclusive_outlined),
+            label: 'Random',
           ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.ac_unit_rounded),

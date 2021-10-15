@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'author_card.dart';
-import '../../../fooderlich_theme.dart';
+import '../../../catapp_theme.dart';
 
 class Card2 extends StatelessWidget {
   const Card2({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class Card2 extends StatelessWidget {
                     right: 16,
                     child: Text(
                       'Recipe',
-                      style: FooderlichTheme.lightTextTheme.headline1,
+                      style: CatAppTheme.lightTextTheme.headline1,
                     ),
                   ),
                   // 4
@@ -53,7 +53,7 @@ class Card2 extends StatelessWidget {
                       quarterTurns: 3,
                       child: Text(
                         'Smoothies',
-                        style: FooderlichTheme.lightTextTheme.headline1,
+                        style: CatAppTheme.lightTextTheme.headline1,
                       ),
                     ),
                   ),

@@ -1,20 +1,24 @@
+import 'package:catsapp/presentation/utils/bloc_observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'fooderlich_theme.dart';
+import 'catapp_theme.dart';
 import 'presentation/home/home.dart';
 
 void main() {
-  runApp(const Fooderlich());
+  Bloc.observer = AppBlocObserver();
+
+  runApp(const CatApp());
 }
 
-class Fooderlich extends StatelessWidget {
-  const Fooderlich({Key? key}) : super(key: key);
+class CatApp extends StatelessWidget {
+  const CatApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final theme = FooderlichTheme.dark();
+    final theme = CatAppTheme.dark();
     return MaterialApp(
       theme: theme,
-      title: 'Recipes',
+      title: 'Cats',
       home: const Home(),
     );
   }
