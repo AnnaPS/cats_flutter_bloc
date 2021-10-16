@@ -15,9 +15,8 @@ class CatService {
   final Client _httpClient;
 
   Future<Cat> search() async {
-    print(Uri.parse('$baseUrl/images/search?include_breeds=true'));
-    final response = await _httpClient.get(Uri.parse(
-        '$baseUrl/images/search?include_breeds=true&has_breeds=true'));
+    final response = await _httpClient
+        .get(Uri.parse('$baseUrl/images/search?has_breeds=true'));
     final result = json.decode(response.body);
 
     if (response.statusCode == 200) {
