@@ -23,10 +23,13 @@ class RandomCatLayout extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 28.0),
                 child: CatCard(
-                  title: state.cat?.breeds?.first.name ?? '',
-                  origin: state.cat?.breeds?.first.origin ?? '',
-                  weight: state.cat?.breeds?.first.weight?.imperial ?? '',
-                  description: state.cat?.breeds?.first.description ?? '',
+                  key: const Key('cat_card'),
+                  title: state.cat?.breeds?.first.name ?? 'No info',
+                  origin: state.cat?.breeds?.first.origin ?? 'No info',
+                  weight:
+                      state.cat?.breeds?.first.weight?.imperial ?? 'No info',
+                  description:
+                      state.cat?.breeds?.first.description ?? 'No info',
                   catPhoto: state.cat?.url ??
                       'https://clinicadentalarias.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg',
                 ),
@@ -37,6 +40,7 @@ class RandomCatLayout extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: FloatingActionButton(
+                    key: const Key('fab_next_cat'),
                     onPressed: () async {
                       context.read<RandomCatBloc>().add(SearchRandomCat());
                     },
