@@ -154,33 +154,6 @@ void main() {
           ),
         );
       });
-
-      test('return a correct Cat with empty breeds list on a valid response',
-          () async {
-        final response = MockResponse();
-
-        when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn(
-          '[{'
-          '"breeds":[],'
-          '"id":"MuEGe1-Sz",'
-          '"url":"https://cdn2.thecatapi.com/images/MuEGe1-Sz.jpg",'
-          '"width":3000,'
-          '"height":2002}]',
-        );
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-
-        final result = await catService.search();
-        expect(
-            result,
-            isA<Cat>()
-                .having((cat) => cat.url, 'url',
-                    'https://cdn2.thecatapi.com/images/MuEGe1-Sz.jpg')
-                .having((cat) => cat.width, 'width', 3000)
-                .having((cat) => cat.height, 'height', 2002)
-                .having((cat) => cat.id, 'id', 'MuEGe1-Sz')
-                .having((cat) => cat.breeds, 'breeds', []));
-      });
     });
   });
 }

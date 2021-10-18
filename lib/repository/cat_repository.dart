@@ -1,3 +1,5 @@
+import 'package:catsapp/repository/model/result_error.dart';
+
 import 'model/cat.dart';
 import 'service.dart';
 

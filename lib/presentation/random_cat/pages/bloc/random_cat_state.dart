@@ -22,6 +22,11 @@ class RandomCatStateError extends RandomCatState {
   final String message;
 }
 
+class RandomCatEmptyBreedsState extends RandomCatState {
+  const RandomCatEmptyBreedsState({required this.urlPhoto});
+  final String urlPhoto;
+}
+
 class RandomCatInitState extends RandomCatState {}
 
 class RandomCatLoadState extends RandomCatState {}
