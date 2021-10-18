@@ -1,4 +1,4 @@
-class ResultError {
+class ResultError implements Exception {
   const ResultError({required this.message});
 
   final String message;

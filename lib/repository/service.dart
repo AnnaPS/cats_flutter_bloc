@@ -20,7 +20,11 @@ class CatService {
     final result = json.decode(response.body);
 
     if (response.statusCode == 200) {
-      return Cat.fromJson(result[0]);
+      if (response.body.isNotEmpty) {
+        return Cat.fromJson(result[0]);
+      } else {
+        throw ResultError(message: result);
+      }
     } else {
       throw ResultError(message: result);
     }
