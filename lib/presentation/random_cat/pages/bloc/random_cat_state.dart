@@ -17,11 +17,6 @@ class RandomCatState extends Equatable {
   }
 }
 
-class RandomCatStateError extends RandomCatState {
-  const RandomCatStateError({required this.message});
-  final String message;
-}
-
 class RandomCatEmptyBreedsState extends RandomCatState {
   const RandomCatEmptyBreedsState({required this.urlPhoto});
   final String urlPhoto;
