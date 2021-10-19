@@ -10,7 +10,12 @@ class RandomCatLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RandomCatBloc, RandomCatState>(
+    return BlocConsumer<RandomCatBloc, RandomCatState>(
+      listener: (context, state) {
+        if (state is RandomCatEmptyBreedsState) {
+          context.read<RandomCatBloc>().add(SearchRandomCat());
+        }
+      },
       builder: (context, state) {
         if (state is RandomCatStateError) {
           print('error: ----> ${state.message}');

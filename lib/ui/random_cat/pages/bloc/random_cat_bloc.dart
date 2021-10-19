@@ -13,11 +13,12 @@ class RandomCatBloc extends Bloc<RandomCatEvent, RandomCatState> {
       SearchRandomCat event, Emitter<RandomCatState> emit) async {
     try {
       emit(RandomCatLoadState());
-      var cat = await catRepository.search();
-      if (cat.breeds == null || cat.breeds!.isEmpty) {
-        cat = await catRepository.search();
+      final cat = await catRepository.search();
+      if ((cat.breeds == null || cat.breeds!.isEmpty)) {
+        emit(RandomCatEmptyBreedsState());
+      } else {
+        emit(state.copyWith(cat: cat));
       }
-      emit(state.copyWith(cat: cat));
     } catch (error) {
       emit(RandomCatStateError(message: error.toString()));
     }

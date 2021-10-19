@@ -25,3 +25,5 @@ class RandomCatStateError extends RandomCatState {
 class RandomCatInitState extends RandomCatState {}
 
 class RandomCatLoadState extends RandomCatState {}
+
+class RandomCatEmptyBreedsState extends RandomCatState {}
