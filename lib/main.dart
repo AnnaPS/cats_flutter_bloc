@@ -1,9 +1,9 @@
-import 'package:catsapp/presentation/utils/bloc_observer.dart';
+import 'package:catsapp/ui/utils/bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'catapp_theme.dart';
-import 'presentation/home/home.dart';
+import 'ui/home/home.dart';
 
 void main() {
   Bloc.observer = AppBlocObserver();
