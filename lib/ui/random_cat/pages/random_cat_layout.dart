@@ -1,8 +1,8 @@
-import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_bloc.dart';
-import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_event.dart';
-import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_state.dart';
-import 'package:catsapp/ui/random_cat/widgets/cat_card.dart';
-import 'package:catsapp/utils/const_keys_app.dart';
+import 'bloc/random_cat_bloc.dart';
+import 'bloc/random_cat_event.dart';
+import 'bloc/random_cat_state.dart';
+import '../widgets/cat_card.dart';
+import '../../../utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
