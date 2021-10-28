@@ -9,7 +9,6 @@ class CatRepository {
 
   Future<Cat> search() async {
     final result = await service.search();
-    print(result.breeds);
     return result;
   }
 }
