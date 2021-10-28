@@ -14,18 +14,17 @@ class MockCat extends Mock implements cat.Cat {}
 
 void main() {
   group('RandomCatBloc', () {
-    late RandomCatBloc catBloc;
     late catRepository.CatRepository catRepositoryMock;
     late cat.Cat catMock;
 
     setUp(() {
       catRepositoryMock = MockRepository();
-      catBloc = RandomCatBloc(catRepository: catRepositoryMock);
       catMock = MockCat();
     });
 
     test('initial state of the bloc is [RandomCatInitState]', () {
-      expect(catBloc.state, RandomCatInitState());
+      expect(RandomCatBloc(catRepository: catRepositoryMock).state,
+          RandomCatInitState());
     });
 
     blocTest<RandomCatBloc, RandomCatState>(
@@ -36,12 +35,14 @@ void main() {
           (_) async => catMock,
         );
       },
-      build: () => catBloc,
+      build: () => RandomCatBloc(catRepository: catRepositoryMock),
       act: (bloc) => bloc.add(SearchRandomCat()),
       expect: () => [
         RandomCatLoadState(),
         catMock.breeds != null
-            ? catBloc.state.copyWith(cat: catMock)
+            ? RandomCatBloc(catRepository: catRepositoryMock)
+                .state
+                .copyWith(cat: catMock)
             : RandomCatEmptyBreedsState()
       ],
     );
@@ -52,7 +53,7 @@ void main() {
         when(() => catRepositoryMock.search())
             .thenThrow((_) async => const ResultError(message: 'error'));
       },
-      build: () => catBloc,
+      build: () => RandomCatBloc(catRepository: catRepositoryMock),
       act: (bloc) => bloc.add(SearchRandomCat()),
       expect: () =>
           [RandomCatLoadState(), const RandomCatStateError(message: 'error')],
@@ -67,12 +68,8 @@ void main() {
           when(() => catRepositoryMock.search())
               .thenAnswer((_) async => catMock);
         },
-        build: () => catBloc,
+        build: () => RandomCatBloc(catRepository: catRepositoryMock),
         act: (bloc) => bloc.add(SearchRandomCat()),
         expect: () => [RandomCatLoadState(), RandomCatEmptyBreedsState()]);
-
-    tearDown(() {
-      catBloc.close();
-    });
   });
 }
