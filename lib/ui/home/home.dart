@@ -46,12 +46,12 @@ class _HomeState extends State<Home> {
             label: 'Random',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.ac_unit_rounded),
-            label: 'Smoothies',
+            icon: Icon(Icons.list_alt),
+            label: 'Cats',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Trends',
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
       ),

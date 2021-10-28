@@ -1,3 +1,4 @@
+import 'package:catsapp/utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../../catapp_theme.dart';
@@ -21,7 +22,7 @@ class CatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: const Key('container_cat_card'),
+      key: const Key(ConstWidgetKeysApp.RandomCatCardImage),
       child: Stack(
         children: [
           Text(
@@ -31,7 +32,7 @@ class CatCard extends StatelessWidget {
           Positioned(
             child: Text(
               title,
-              key: const Key('title_cat_card'),
+              key: const Key(ConstWidgetKeysApp.RandomCatCardTitle),
               style: CatAppTheme.darkTextTheme.headline2,
             ),
             top: 20,
@@ -41,7 +42,7 @@ class CatCard extends StatelessWidget {
               width: 260,
               child: Text(
                 description,
-                key: const Key('description_cat_card'),
+                key: const Key(ConstWidgetKeysApp.RandomCatCardDescription),
                 style: CatAppTheme.darkTextTheme.bodyText1,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
@@ -54,7 +55,7 @@ class CatCard extends StatelessWidget {
           Positioned(
             child: Text(
               weight,
-              key: const Key('weight_cat_card'),
+              key: const Key(ConstWidgetKeysApp.RandomCatCardWeight),
               style: CatAppTheme.darkTextTheme.bodyText1,
             ),
             bottom: 10,

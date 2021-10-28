@@ -2,6 +2,7 @@ import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_bloc.dart';
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_event.dart';
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_state.dart';
 import 'package:catsapp/ui/random_cat/widgets/cat_card.dart';
+import 'package:catsapp/utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,9 +19,12 @@ class RandomCatLayout extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is RandomCatStateError) {
-          print('error: ----> ${state.message}');
           return Center(
             child: Text(state.message),
+          );
+        } else if (state is RandomCatLoadState) {
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.green),
           );
         } else if (state is RandomCatState) {
           return Column(
@@ -28,7 +32,7 @@ class RandomCatLayout extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 28.0),
                 child: CatCard(
-                  key: const Key('cat_card'),
+                  key: const Key(ConstWidgetKeysApp.RandomCatCardKey),
                   title: state.cat?.breeds?.first.name ?? 'No info',
                   origin: state.cat?.breeds?.first.origin ?? 'No info',
                   weight:
@@ -45,7 +49,7 @@ class RandomCatLayout extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: FloatingActionButton(
-                    key: const Key('fab_next_cat'),
+                    key: const Key(ConstWidgetKeysApp.RandomCatFabButtonKey),
                     onPressed: () async {
                       context.read<RandomCatBloc>().add(SearchRandomCat());
                     },
@@ -57,7 +61,7 @@ class RandomCatLayout extends StatelessWidget {
           );
         } else {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: Text('No information available'),
           );
         }
       },
