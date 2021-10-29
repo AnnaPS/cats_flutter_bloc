@@ -86,3 +86,4 @@ app.*.map.json
 
 # Coverage
 **/coverage/
+**/utils/tool/coverage.sh
