@@ -49,31 +49,23 @@ void main() {
 
       test('throws ResultError on non-200 response', () async {
         final response = MockResponse();
-        when(() => response.statusCode).thenReturn(400);
+        when(() => response.statusCode).thenReturn(404);
+        when(() => response.body).thenReturn('{"message": "Error"}');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
-
-        try {
-          final result = await catService.search();
-          expect(
-            () async => result,
-            throwsA(isA<ResultError>()),
-          );
-        } catch (_) {}
+        expect(catService.search(), throwsA(isA<ResultError>()));
       });
 
       test('throws ResultError on empty response', () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
         when(() => response.body).thenReturn('{}');
+        when(() => response.body.).thenReturn('{"message": "Error"}');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
 
-        try {
-          final result = await catService.search();
-          expect(
-            () async => result,
-            throwsA(isA<ResultError>()),
-          );
-        } catch (_) {}
+        expect(
+          () async => catService.search(),
+          throwsA(isA<ResultError>()),
+        );
       });
 
       test('return a correct Cat on a valid response', () async {
