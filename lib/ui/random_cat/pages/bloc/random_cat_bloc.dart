@@ -14,7 +14,7 @@ class RandomCatBloc extends Bloc<RandomCatEvent, RandomCatState> {
     try {
       emit(RandomCatLoadState());
       final cat = await catRepository.search();
-      if ((cat.breeds == null || cat.breeds!.isEmpty)) {
+      if (cat.breeds == null || cat.breeds!.isEmpty) {
         emit(RandomCatEmptyBreedsState());
       } else {
         emit(state.copyWith(cat: cat));

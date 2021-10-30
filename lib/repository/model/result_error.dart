@@ -1,11 +1,3 @@
-class ResultError implements Exception {
-  const ResultError({required this.message});
+class ErrorSearchingCat implements Exception {}
 
-  final String message;
-
-  static ResultError fromJson(Map<Object, String> json) {
-    return ResultError(
-      message: json['message'] as String,
-    );
-  }
-}
+class ErrorEmptyResponse implements Exception {}

@@ -17,16 +17,14 @@ class CatService {
   Future<Cat> search() async {
     final response = await _httpClient
         .get(Uri.parse('$baseUrl/images/search?has_breeds=true'));
-    final result = json.decode(response.body);
-
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
-        return Cat.fromJson(result[0]);
+        return Cat.fromJson(json.decode(response.body)[0]);
       } else {
-        throw ResultError(message: result);
+        throw ErrorEmptyResponse();
       }
     } else {
-      throw ResultError(message: result);
+      throw ErrorSearchingCat();
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:catsapp/repository/cat_repository.dart' as catRepository;
+import 'package:catsapp/repository/model/breed.dart';
 import 'package:catsapp/repository/model/cat.dart' as cat;
 import 'package:catsapp/repository/model/result_error.dart';
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_bloc.dart';
@@ -28,22 +29,44 @@ void main() {
     });
 
     blocTest<RandomCatBloc, RandomCatState>(
-      'emits [RandomCatLoadState, RandomCatState] '
-      'state for successful search',
+      'emits [RandomCatLoadState, RandomCatEmptyBreedsState] '
+      'state when cat.breeds are empty',
       setUp: () {
-        when(() => catRepositoryMock.search()).thenAnswer(
-          (_) async => catMock,
-        );
+        when(() => catMock.breeds).thenReturn([]);
+        when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock);
+      },
+      build: () => RandomCatBloc(catRepository: catRepositoryMock),
+      act: (bloc) => bloc.add(SearchRandomCat()),
+      expect: () => [RandomCatLoadState(), RandomCatEmptyBreedsState()],
+    );
+
+    blocTest<RandomCatBloc, RandomCatState>(
+      'emits [RandomCatLoadState, RandomCatEmptyBreedsState] '
+      'state when cat.breeds empty',
+      setUp: () {
+        when(() => catMock.breeds).thenReturn(null);
+        when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock);
+      },
+      build: () => RandomCatBloc(catRepository: catRepositoryMock),
+      act: (bloc) => bloc.add(SearchRandomCat()),
+      expect: () => [RandomCatLoadState(), RandomCatEmptyBreedsState()],
+    );
+
+    blocTest<RandomCatBloc, RandomCatState>(
+      'emits [RandomCatLoadState, RandomCatState] '
+      'state for successful',
+      setUp: () {
+        when(() => catMock.breeds)
+            .thenReturn(List.generate(1, (index) => Breed(id: '1')));
+        when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock);
       },
       build: () => RandomCatBloc(catRepository: catRepositoryMock),
       act: (bloc) => bloc.add(SearchRandomCat()),
       expect: () => [
         RandomCatLoadState(),
-        catMock.breeds != null
-            ? RandomCatBloc(catRepository: catRepositoryMock)
-                .state
-                .copyWith(cat: catMock)
-            : RandomCatEmptyBreedsState()
+        RandomCatBloc(catRepository: catRepositoryMock)
+            .state
+            .copyWith(cat: catMock)
       ],
     );
 
@@ -51,25 +74,12 @@ void main() {
       'emits [RandomCatLoadState, RandomCatStateError] when unsuccessful',
       setUp: () {
         when(() => catRepositoryMock.search())
-            .thenThrow((_) async => const ResultError(message: 'error'));
+            .thenThrow((_) async => ErrorSearchingCat());
       },
       build: () => RandomCatBloc(catRepository: catRepositoryMock),
       act: (bloc) => bloc.add(SearchRandomCat()),
       expect: () =>
           [RandomCatLoadState(), const RandomCatStateError(message: 'error')],
     );
-
-    blocTest<RandomCatBloc, RandomCatState>(
-        'emits [RandomCatLoadState, RandomCatEmptyBreedsState] '
-        'state when cat.breeds are null or empty',
-        setUp: () {
-          when(() => catMock.breeds).thenAnswer((_) => catMock.breeds = []);
-          when(() => catMock.breeds).thenAnswer((_) => catMock.breeds = null);
-          when(() => catRepositoryMock.search())
-              .thenAnswer((_) async => catMock);
-        },
-        build: () => RandomCatBloc(catRepository: catRepositoryMock),
-        act: (bloc) => bloc.add(SearchRandomCat()),
-        expect: () => [RandomCatLoadState(), RandomCatEmptyBreedsState()]);
   });
 }

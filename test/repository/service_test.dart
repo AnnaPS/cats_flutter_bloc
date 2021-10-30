@@ -13,6 +13,10 @@ class MockResponse extends Mock implements http.Response {}
 
 class FakeUri extends Fake implements Uri {}
 
+class MockErrorSearchingCat extends Mock implements ErrorSearchingCat {}
+
+class MockErrorEmptyResponse extends Mock implements ErrorEmptyResponse {}
+
 void main() {
   group('Service', () {
     late CatService catService;
@@ -50,22 +54,16 @@ void main() {
       test('throws ResultError on non-200 response', () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(404);
-        when(() => response.body).thenReturn('{"message": "Error"}');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        expect(catService.search(), throwsA(isA<ResultError>()));
+        expect(catService.search(), throwsA(isA<ErrorSearchingCat>()));
       });
 
       test('throws ResultError on empty response', () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn('{}');
-        when(() => response.body.).thenReturn('{"message": "Error"}');
+        when(() => response.body).thenReturn('');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
-
-        expect(
-          () async => catService.search(),
-          throwsA(isA<ResultError>()),
-        );
+        expect(catService.search(), throwsA(isA<ErrorEmptyResponse>()));
       });
 
       test('return a correct Cat on a valid response', () async {
