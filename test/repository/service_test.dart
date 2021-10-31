@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:catsapp/repository/model/breed.dart';
 import 'package:catsapp/repository/model/cat.dart';
 import 'package:catsapp/repository/model/result_error.dart';
@@ -21,6 +23,7 @@ void main() {
   group('Service', () {
     late CatService catService;
     late MockHttp httpClient;
+    late String json;
 
     setUpAll(() {
       registerFallbackValue(FakeUri());
@@ -28,50 +31,7 @@ void main() {
     setUp(() {
       httpClient = MockHttp();
       catService = CatService(httpClient: httpClient);
-    });
-
-    group('constructor', () {
-      test('does not required an httpClient', () {
-        expect(CatService(), isNotNull);
-      });
-    });
-
-    group(('catSearch'), () {
-      test('make correct http request', () async {
-        final response = MockResponse();
-
-        when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn('[]');
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        try {
-          await catService.search();
-        } catch (_) {}
-        verify(() => httpClient.get(Uri.parse(
-                'https://api.thecatapi.com/v1/images/search?has_breeds=true')))
-            .called(1);
-      });
-
-      test('throws ResultError on non-200 response', () async {
-        final response = MockResponse();
-        when(() => response.statusCode).thenReturn(404);
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        expect(catService.search(), throwsA(isA<ErrorSearchingCat>()));
-      });
-
-      test('throws ResultError on empty response', () async {
-        final response = MockResponse();
-        when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn('');
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        expect(catService.search(), throwsA(isA<ErrorEmptyResponse>()));
-      });
-
-      test('return a correct Cat on a valid response', () async {
-        final response = MockResponse();
-
-        when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn(
-          '[{'
+      json = '[{'
           '"breeds":[{"weight":{"imperial":"8 - 15","metric":"4 - 7"},'
           '"id":"asho","name":"American Shorthair",'
           '"cfa_url":"http://cfa.org/Breeds/BreedsAB/AmericanShorthair.aspx",'
@@ -113,8 +73,57 @@ void main() {
           '"id":"MuEGe1-Sz",'
           '"url":"https://cdn2.thecatapi.com/images/MuEGe1-Sz.jpg",'
           '"width":3000,'
-          '"height":2002}]',
-        );
+          '"height":2002}]';
+    });
+
+    group('constructor', () {
+      test('does not required an httpClient', () {
+        expect(CatService(), isNotNull);
+      });
+    });
+
+    group(('catSearch'), () {
+      test('make correct http request', () async {
+        final response = MockResponse();
+
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('[]');
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        try {
+          await catService.search();
+        } catch (_) {}
+        verify(() => httpClient.get(Uri.parse(
+                'https://api.thecatapi.com/v1/images/search?has_breeds=true')))
+            .called(1);
+      });
+
+      test('throws ResultError on non-200 response', () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(404);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        expect(catService.search(), throwsA(isA<ErrorSearchingCat>()));
+      });
+
+      test('throws ResultError on empty response', () async {
+        final response = MockResponse();
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn('');
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+        expect(catService.search(), throwsA(isA<ErrorEmptyResponse>()));
+      });
+
+      test('return Cat.json on a valid response', () async {
+        final response = MockResponse();
+
+        when(() => response.statusCode).thenReturn(200);
+        expect(Cat.fromJson(jsonDecode(json)[0]), isA<Cat>());
+      });
+
+      test('return a correct Cat on a valid response', () async {
+        final response = MockResponse();
+
+        when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn(json);
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
 
         final result = await catService.search();

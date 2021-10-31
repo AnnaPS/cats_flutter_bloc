@@ -1,17 +1,20 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'weight.g.dart';
 
 @JsonSerializable()
-class Weight {
-  Weight({
+class Weight extends Equatable {
+  const Weight({
     this.imperial,
     this.metric,
   });
 
-  String? imperial;
-  String? metric;
+  final String? imperial;
+  final String? metric;
 
   factory Weight.fromJson(Map<String, dynamic> json) => _$WeightFromJson(json);
-  Map<String, dynamic> toJson() => _$WeightToJson(this);
+
+  @override
+  List<Object?> get props => [imperial, metric];
 }

@@ -1,10 +1,11 @@
 import 'package:catsapp/repository/model/weight.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'breed.g.dart';
 
 @JsonSerializable()
-class Breed {
-  Breed({
+class Breed extends Equatable {
+  const Breed({
     this.weight,
     this.id,
     this.name,
@@ -44,44 +45,85 @@ class Breed {
     this.referenceImageId,
   });
 
-  Weight? weight;
-  String? id;
-  String? name;
-  String? cfaUrl;
-  String? vetstreetUrl;
-  String? vcahospitalsUrl;
-  String? temperament;
-  String? origin;
-  String? countryCodes;
-  String? countryCode;
-  String? description;
-  String? lifeSpan;
-  int? indoor;
-  int? lap;
-  String? altNames;
-  int? adaptability;
-  int? affectionLevel;
-  int? childFriendly;
-  int? dogFriendly;
-  int? energyLevel;
-  int? grooming;
-  int? healthIssues;
-  int? intelligence;
-  int? sheddingLevel;
-  int? socialNeeds;
-  int? strangerFriendly;
-  int? vocalisation;
-  int? experimental;
-  int? hairless;
-  int? natural;
-  int? rare;
-  int? rex;
-  int? suppressedTail;
-  int? shortLegs;
-  String? wikipediaUrl;
-  int? hypoallergenic;
-  String? referenceImageId;
+  final Weight? weight;
+  final String? id;
+  final String? name;
+  final String? cfaUrl;
+  final String? vetstreetUrl;
+  final String? vcahospitalsUrl;
+  final String? temperament;
+  final String? origin;
+  final String? countryCodes;
+  final String? countryCode;
+  final String? description;
+  final String? lifeSpan;
+  final int? indoor;
+  final int? lap;
+  final String? altNames;
+  final int? adaptability;
+  final int? affectionLevel;
+  final int? childFriendly;
+  final int? dogFriendly;
+  final int? energyLevel;
+  final int? grooming;
+  final int? healthIssues;
+  final int? intelligence;
+  final int? sheddingLevel;
+  final int? socialNeeds;
+  final int? strangerFriendly;
+  final int? vocalisation;
+  final int? experimental;
+  final int? hairless;
+  final int? natural;
+  final int? rare;
+  final int? rex;
+  final int? suppressedTail;
+  final int? shortLegs;
+  final String? wikipediaUrl;
+  final int? hypoallergenic;
+  final String? referenceImageId;
 
   factory Breed.fromJson(Map<String, dynamic> json) => _$BreedFromJson(json);
-  Map<String, dynamic> toJson() => _$BreedToJson(this);
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [
+        weight,
+        id,
+        name,
+        cfaUrl,
+        vetstreetUrl,
+        vcahospitalsUrl,
+        temperament,
+        origin,
+        countryCodes,
+        countryCode,
+        description,
+        lifeSpan,
+        indoor,
+        lap,
+        altNames,
+        adaptability,
+        affectionLevel,
+        childFriendly,
+        dogFriendly,
+        energyLevel,
+        grooming,
+        healthIssues,
+        intelligence,
+        sheddingLevel,
+        socialNeeds,
+        strangerFriendly,
+        vocalisation,
+        experimental,
+        hairless,
+        natural,
+        rare,
+        rex,
+        suppressedTail,
+        shortLegs,
+        wikipediaUrl,
+        hypoallergenic,
+        referenceImageId,
+      ];
 }

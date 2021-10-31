@@ -13,14 +13,20 @@ class MockRepository extends Mock implements catRepository.CatRepository {}
 
 class MockCat extends Mock implements cat.Cat {}
 
+class MockCatCopyWith extends Mock implements cat.Cat {}
+
 void main() {
   group('RandomCatBloc', () {
     late catRepository.CatRepository catRepositoryMock;
     late cat.Cat catMock;
+    late cat.Cat catMockCopyWith;
+    late RandomCatState randomCatState;
 
     setUp(() {
       catRepositoryMock = MockRepository();
       catMock = MockCat();
+      catMockCopyWith = MockCatCopyWith();
+      randomCatState = RandomCatState(cat: catMock);
     });
 
     test('initial state of the bloc is [RandomCatInitState]', () {
@@ -42,7 +48,7 @@ void main() {
 
     blocTest<RandomCatBloc, RandomCatState>(
       'emits [RandomCatLoadState, RandomCatEmptyBreedsState] '
-      'state when cat.breeds empty',
+      'state when cat.breeds are null',
       setUp: () {
         when(() => catMock.breeds).thenReturn(null);
         when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock);
@@ -53,21 +59,32 @@ void main() {
     );
 
     blocTest<RandomCatBloc, RandomCatState>(
-      'emits [RandomCatLoadState, RandomCatState] '
+      'emits [RandomCatLoadState, RandomCatState.copyWith]'
+      ' with a copyWith of other cat'
+      'state for successful',
+      setUp: () {
+        when(() => catMockCopyWith.breeds)
+            .thenReturn(List.generate(1, (index) => const Breed(id: '1')));
+        when(() => catRepositoryMock.search())
+            .thenAnswer((_) async => catMockCopyWith);
+      },
+      build: () => RandomCatBloc(catRepository: catRepositoryMock),
+      act: (bloc) => bloc.add(SearchRandomCat()),
+      expect: () =>
+          [RandomCatLoadState(), randomCatState.copyWith(cat: catMockCopyWith)],
+    );
+
+    blocTest<RandomCatBloc, RandomCatState>(
+      'emits [RandomCatLoadState, RandomCatState] with a default cat'
       'state for successful',
       setUp: () {
         when(() => catMock.breeds)
-            .thenReturn(List.generate(1, (index) => Breed(id: '1')));
+            .thenReturn(List.generate(1, (index) => const Breed(id: '1')));
         when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock);
       },
       build: () => RandomCatBloc(catRepository: catRepositoryMock),
       act: (bloc) => bloc.add(SearchRandomCat()),
-      expect: () => [
-        RandomCatLoadState(),
-        RandomCatBloc(catRepository: catRepositoryMock)
-            .state
-            .copyWith(cat: catMock)
-      ],
+      expect: () => [RandomCatLoadState(), randomCatState.copyWith()],
     );
 
     blocTest<RandomCatBloc, RandomCatState>(
