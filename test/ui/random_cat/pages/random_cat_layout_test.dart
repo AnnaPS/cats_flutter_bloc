@@ -6,6 +6,7 @@ import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_event.dart';
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_state.dart';
 import 'package:catsapp/ui/random_cat/pages/random_cat_layout.dart';
 import 'package:catsapp/ui/random_cat/pages/random_cat_page.dart';
+import 'package:catsapp/ui/random_cat/widgets/cat_card.dart';
 import 'package:catsapp/utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,7 +34,7 @@ void main() {
 
     blocCat = MockRandomCatBloc();
 
-    randomCatView = BlocProvider<MockRandomCatBloc>(
+    randomCatView = BlocProvider<RandomCatBloc>(
       lazy: false,
       create: (_) => blocCat,
       child: const MaterialApp(
@@ -43,24 +44,26 @@ void main() {
   });
 
   group('RandomCatPage states ', () {
-    testWidgets('renders RandomCatLayout', (tester) async {
-      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
-      expect(find.byType(RandomCatLayout), findsOneWidget);
-    });
-
     testWidgets('render RandomCatLayout when state is [RandomCatStateError]',
         (tester) async {
       when(() => blocCat.state)
           .thenReturn(const RandomCatStateError(message: 'error'));
       await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
-      expect(find.byType(RandomCatStateError), findsOneWidget);
+      expect(find.text('error'), findsOneWidget);
     });
 
     testWidgets('render RandomCatLayout when state is [RandomCatLoadState]',
         (tester) async {
       when(() => blocCat.state).thenReturn(RandomCatLoadState());
       await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
-      expect(find.byType(RandomCatLoadState), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('render RandomCatLayout when state is [RandomCatState]',
+        (tester) async {
+      when(() => blocCat.state).thenReturn(const RandomCatState());
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
+      expect(find.byType(CatCard), findsOneWidget);
     });
   });
 }
