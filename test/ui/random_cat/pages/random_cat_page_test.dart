@@ -22,40 +22,45 @@ class MockRandomCatEvent extends Fake implements RandomCatEvent {}
 
 void main() {
   late CatRepository catRepository;
-  late Widget page;
+  late Widget randomCatView;
+  late MockRandomCatBloc blocCat;
 
   setUp(() {
     catRepository = CatRepository(service: CatService());
+
     registerFallbackValue<RandomCatEvent>(RandomCatEvent());
     registerFallbackValue<MockRandomCatState>(MockRandomCatState());
-    page = BlocProvider<RandomCatBloc>(
+
+    blocCat = MockRandomCatBloc();
+
+    randomCatView = BlocProvider<MockRandomCatBloc>(
       lazy: false,
-      create: (context) => MockRandomCatBloc(),
+      create: (_) => blocCat,
       child: const MaterialApp(
-        home: RandomCatPage(),
+        home: RandomCatLayout(),
       ),
     );
   });
 
   group('RandomCatPage states ', () {
     testWidgets('renders RandomCatLayout', (tester) async {
-      await mockNetworkImagesFor(() => tester.pumpWidget(page));
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
       expect(find.byType(RandomCatLayout), findsOneWidget);
     });
 
     testWidgets('render RandomCatLayout when state is [RandomCatStateError]',
         (tester) async {
-      final blocCat = MockRandomCatBloc();
       when(() => blocCat.state)
           .thenReturn(const RandomCatStateError(message: 'error'));
-      await mockNetworkImagesFor(() => tester.pumpWidget(page));
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
+      expect(find.byType(RandomCatStateError), findsOneWidget);
     });
 
     testWidgets('render RandomCatLayout when state is [RandomCatLoadState]',
         (tester) async {
-      final blocCat = MockRandomCatBloc();
       when(() => blocCat.state).thenReturn(RandomCatLoadState());
-      await mockNetworkImagesFor(() => tester.pumpWidget(page));
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
+      expect(find.byType(RandomCatLoadState), findsOneWidget);
     });
   });
 }

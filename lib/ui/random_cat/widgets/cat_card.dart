@@ -1,23 +1,13 @@
+import 'package:catsapp/repository/model/cat.dart';
 import 'package:catsapp/utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
 
 import '../../../catapp_theme.dart';
 
 class CatCard extends StatelessWidget {
-  const CatCard(
-      {Key? key,
-      required this.catPhoto,
-      required this.title,
-      required this.origin,
-      required this.description,
-      required this.weight})
-      : super(key: key);
+  const CatCard({Key? key, required this.cat}) : super(key: key);
 
-  final String origin;
-  final String title;
-  final String description;
-  final String weight;
-  final String catPhoto;
+  final Cat cat;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +16,12 @@ class CatCard extends StatelessWidget {
       child: Stack(
         children: [
           Text(
-            origin,
+            cat.breeds?.first.origin ?? 'No info',
             style: CatAppTheme.darkTextTheme.bodyText1,
           ),
           Positioned(
             child: Text(
-              title,
+              cat.breeds?.first.name ?? 'No info',
               key: const Key(ConstWidgetKeysApp.RandomCatCardTitle),
               style: CatAppTheme.darkTextTheme.headline2,
             ),
@@ -41,7 +31,7 @@ class CatCard extends StatelessWidget {
             child: SizedBox(
               width: 260,
               child: Text(
-                description,
+                cat.breeds?.first.description ?? 'No info',
                 key: const Key(ConstWidgetKeysApp.RandomCatCardDescription),
                 style: CatAppTheme.darkTextTheme.bodyText1,
                 maxLines: 3,
@@ -54,7 +44,7 @@ class CatCard extends StatelessWidget {
           ),
           Positioned(
             child: Text(
-              weight,
+              cat.breeds?.first.weight?.metric ?? 'No info',
               key: const Key(ConstWidgetKeysApp.RandomCatCardWeight),
               style: CatAppTheme.darkTextTheme.bodyText1,
             ),
@@ -73,7 +63,8 @@ class CatCard extends StatelessWidget {
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.5), BlendMode.dstATop),
-          image: NetworkImage(catPhoto),
+          image: NetworkImage(cat.url ??
+              'https://clinicadentalarias.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg'),
           fit: BoxFit.cover,
         ),
         borderRadius: const BorderRadius.all(Radius.circular(10.0)),

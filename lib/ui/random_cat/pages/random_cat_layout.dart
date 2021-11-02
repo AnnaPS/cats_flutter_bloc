@@ -1,3 +1,5 @@
+import 'package:catsapp/repository/model/cat.dart';
+
 import 'bloc/random_cat_bloc.dart';
 import 'bloc/random_cat_event.dart';
 import 'bloc/random_cat_state.dart';
@@ -33,14 +35,7 @@ class RandomCatLayout extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 28.0),
                 child: CatCard(
                   key: const Key(ConstWidgetKeysApp.RandomCatCardKey),
-                  title: state.cat?.breeds?.first.name ?? 'No info',
-                  origin: state.cat?.breeds?.first.origin ?? 'No info',
-                  weight:
-                      state.cat?.breeds?.first.weight?.imperial ?? 'No info',
-                  description:
-                      state.cat?.breeds?.first.description ?? 'No info',
-                  catPhoto: state.cat?.url ??
-                      'https://clinicadentalarias.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg',
+                  cat: state.cat ?? const Cat(),
                 ),
               ),
               const Spacer(),
