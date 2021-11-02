@@ -1,8 +1,8 @@
 import '../random_cat/pages/random_cat_page.dart';
 import 'package:flutter/material.dart';
 
-import '../smoothy/widgets/card2.dart';
-import '../trend/widgets/card3.dart';
+import '../list_cat/widgets/card2.dart';
+import '../profile/widgets/card3.dart';
 
 // 1
 class Home extends StatefulWidget {

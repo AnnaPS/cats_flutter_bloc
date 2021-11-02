@@ -28,6 +28,7 @@ void main() {
     setUpAll(() {
       registerFallbackValue(FakeUri());
     });
+
     setUp(() {
       httpClient = MockHttp();
       catService = CatService(httpClient: httpClient);
@@ -77,7 +78,7 @@ void main() {
     });
 
     group('constructor', () {
-      test('does not required an httpClient', () {
+      test('does not required a httpClient', () {
         expect(CatService(), isNotNull);
       });
     });

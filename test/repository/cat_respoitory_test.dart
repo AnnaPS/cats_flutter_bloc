@@ -120,7 +120,7 @@ void main() {
         expect(breed.hashCode == breed2.hashCode, true);
       });
 
-      test('weight equatable, two different weight', () {
+      test('weight equatable, two equal weight', () {
         const weight = Weight(imperial: 'imperial', metric: 'metric');
         const weight2 = Weight(imperial: 'imperial', metric: 'metric');
         expect(weight == weight2, true);
