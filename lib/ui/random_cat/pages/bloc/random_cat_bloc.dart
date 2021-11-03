@@ -1,10 +1,13 @@
-import 'random_cat_event.dart';
-import 'random_cat_state.dart';
+import 'package:catsapp/repository/model/cat.dart';
+import 'package:equatable/equatable.dart';
 import '../../../../repository/cat_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../random_cat.dart';
+part 'random_cat_state.dart';
+part 'random_cat_event.dart';
 
 class RandomCatBloc extends Bloc<RandomCatEvent, RandomCatState> {
-  RandomCatBloc({required this.catRepository}) : super(RandomCatInitState()) {
+  RandomCatBloc({required this.catRepository}) : super(const RandomCatState()) {
     on<SearchRandomCat>((event, emit) => _mapSearchEventToState(event, emit));
   }
 
@@ -12,15 +15,15 @@ class RandomCatBloc extends Bloc<RandomCatEvent, RandomCatState> {
   void _mapSearchEventToState(
       SearchRandomCat event, Emitter<RandomCatState> emit) async {
     try {
-      emit(RandomCatLoadState());
+      emit(state.copyWith(status: RandomCatStatus.loading));
       final cat = await catRepository.search();
       if (cat.breeds == null || cat.breeds!.isEmpty) {
-        emit(RandomCatEmptyBreedsState());
+        emit(state.copyWith(status: RandomCatStatus.emptyBreeds));
       } else {
-        emit(state.copyWith(cat: cat));
+        emit(state.copyWith(cat: cat, status: RandomCatStatus.success));
       }
-    } catch (error) {
-      emit(RandomCatStateError(message: error.toString()));
+    } catch (_) {
+      emit(state.copyWith(status: RandomCatStatus.failure));
     }
   }
 }

@@ -86,7 +86,6 @@ class Breed extends Equatable {
   factory Breed.fromJson(Map<String, dynamic> json) => _$BreedFromJson(json);
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         weight,
         id,

@@ -1,5 +1,4 @@
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_bloc.dart';
-import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_event.dart';
 import 'package:catsapp/ui/random_cat/pages/random_cat_layout.dart';
 import 'package:catsapp/repository/cat_repository.dart';
 import 'package:catsapp/repository/service.dart';

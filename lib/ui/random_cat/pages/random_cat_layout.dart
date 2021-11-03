@@ -1,8 +1,4 @@
-import 'package:catsapp/repository/model/cat.dart';
-
 import 'bloc/random_cat_bloc.dart';
-import 'bloc/random_cat_event.dart';
-import 'bloc/random_cat_state.dart';
 import '../widgets/cat_card.dart';
 import '../../../utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +11,20 @@ class RandomCatLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<RandomCatBloc, RandomCatState>(
       listener: (context, state) {
-        if (state is RandomCatEmptyBreedsState) {
+        if (state.status.isEmptyBreeds) {
           context.read<RandomCatBloc>().add(SearchRandomCat());
         }
       },
       builder: (context, state) {
-        if (state is RandomCatStateError) {
-          return Center(
-            child: Text(state.message),
+        if (state.status.isFailure) {
+          return const Center(
+            child: Text('error'),
           );
-        } else if (state is RandomCatLoadState) {
+        } else if (state.status.isInitial) {
+          return const Center(
+            child: Text('No information available'),
+          );
+        } else if (state.status.isLoading) {
           return const Center(
             child: CircularProgressIndicator(color: Colors.green),
           );
@@ -35,7 +35,7 @@ class RandomCatLayout extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 28.0),
                 child: CatCard(
                   key: const Key(ConstWidgetKeysApp.RandomCatCardKey),
-                  cat: state.cat ?? const Cat(),
+                  cat: state.cat,
                 ),
               ),
               const Spacer(),
@@ -55,9 +55,7 @@ class RandomCatLayout extends StatelessWidget {
             ],
           );
         } else {
-          return const Center(
-            child: Text('No information available'),
-          );
+          return const SizedBox();
         }
       },
     );

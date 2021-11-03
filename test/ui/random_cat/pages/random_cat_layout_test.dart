@@ -2,8 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:catsapp/repository/cat_repository.dart';
 import 'package:catsapp/repository/service.dart';
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_bloc.dart';
-import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_event.dart';
-import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_state.dart';
+
 import 'package:catsapp/ui/random_cat/pages/random_cat_layout.dart';
 import 'package:catsapp/ui/random_cat/pages/random_cat_page.dart';
 import 'package:catsapp/ui/random_cat/widgets/cat_card.dart';
@@ -44,26 +43,55 @@ void main() {
   });
 
   group('RandomCatPage states ', () {
-    testWidgets('render RandomCatLayout when state is [RandomCatStateError]',
+    testWidgets(
+        'render RandomCatLayout when state is [RandomCatStatus.failure]',
         (tester) async {
       when(() => blocCat.state)
-          .thenReturn(const RandomCatStateError(message: 'error'));
+          .thenReturn(const RandomCatState(status: RandomCatStatus.failure));
       await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
       expect(find.text('error'), findsOneWidget);
     });
 
-    testWidgets('render RandomCatLayout when state is [RandomCatLoadState]',
+    testWidgets(
+        'render RandomCatLayout when state is [RandomCatStatus.loading]',
         (tester) async {
-      when(() => blocCat.state).thenReturn(RandomCatLoadState());
+      when(() => blocCat.state)
+          .thenReturn(const RandomCatState(status: RandomCatStatus.loading));
       await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('render RandomCatLayout when state is [RandomCatState]',
+    testWidgets(
+        'render RandomCatLayout when state is [RandomCatStatus.success]',
         (tester) async {
-      when(() => blocCat.state).thenReturn(const RandomCatState());
+      when(() => blocCat.state)
+          .thenReturn(const RandomCatState(status: RandomCatStatus.success));
       await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
       expect(find.byType(CatCard), findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+    });
+
+    testWidgets(
+        'render RandomCatLayout when state is [RandomCatStatus.initial]',
+        (tester) async {
+      when(() => blocCat.state)
+          .thenReturn(const RandomCatState(status: RandomCatStatus.initial));
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
+      expect(find.text('No information available'), findsOneWidget);
+    });
+  });
+
+  group('tap FAB', () {
+    testWidgets('call to bloc when click on FAB', (tester) async {
+      when(() => blocCat.state)
+          .thenReturn(const RandomCatState(status: RandomCatStatus.success));
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+
+      verify(() => blocCat.add(SearchRandomCat())).called(1);
     });
   });
 }

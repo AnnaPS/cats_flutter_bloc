@@ -25,4 +25,7 @@ class Cat extends Equatable {
 
   @override
   List<Object?> get props => [breeds, id, url, width, height];
+
+  static const empty =
+      Cat(breeds: [Breed()], id: '', url: '', width: 0, height: 0);
 }
