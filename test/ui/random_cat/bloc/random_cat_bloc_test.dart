@@ -9,8 +9,6 @@ class MockRepository extends Mock implements catRepository.CatRepository {}
 
 class MockCat extends Mock implements cat.Cat {}
 
-class MockCatCopyWith extends Mock implements cat.Cat {}
-
 void main() {
   group('RandomCatBloc', () {
     late catRepository.CatRepository catRepositoryMock;

@@ -41,8 +41,8 @@ void main() {
     );
   });
 
-  group('RandomCatPage states ', () {
-    testWidgets('renders RandomCatLayout', (tester) async {
+  group('RandomCatPage ', () {
+    testWidgets('renders RandomCatPage', (tester) async {
       await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
       expect(find.byType(RandomCatPage), findsOneWidget);
     });

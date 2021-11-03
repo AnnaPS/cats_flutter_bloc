@@ -28,7 +28,7 @@ class RandomCatLayout extends StatelessWidget {
           return const Center(
             child: CircularProgressIndicator(color: Colors.green),
           );
-        } else if (state is RandomCatState) {
+        } else if (state.status.isSuccess) {
           return Column(
             children: [
               Padding(

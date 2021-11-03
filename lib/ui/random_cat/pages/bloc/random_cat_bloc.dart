@@ -1,8 +1,7 @@
-import 'package:catsapp/repository/model/cat.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../repository/cat_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../random_cat.dart';
+
 part 'random_cat_state.dart';
 part 'random_cat_event.dart';
 

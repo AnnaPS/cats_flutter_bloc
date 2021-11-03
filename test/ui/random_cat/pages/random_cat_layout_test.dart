@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:catsapp/repository/cat_repository.dart';
+import 'package:catsapp/repository/model/cat.dart';
 import 'package:catsapp/repository/service.dart';
 import 'package:catsapp/ui/random_cat/pages/bloc/random_cat_bloc.dart';
 
@@ -90,6 +91,27 @@ void main() {
 
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
+
+      verify(() => blocCat.add(SearchRandomCat())).called(1);
+    });
+  });
+
+  group('Call again to SearchRandomCat on BlocListener ', () {
+    const cat = Cat(id: '1', breeds: [], width: 1, height: 1, url: 'www');
+    testWidgets('Call again to SearchRandomCat when breeds is empty',
+        (tester) async {
+      whenListen(
+        blocCat,
+        Stream<RandomCatState>.fromIterable(
+          [
+            const RandomCatState(),
+            const RandomCatState(status: RandomCatStatus.emptyBreeds, cat: cat)
+          ],
+        ),
+      );
+      when(() => blocCat.state).thenReturn(
+          const RandomCatState(status: RandomCatStatus.emptyBreeds, cat: cat));
+      await mockNetworkImagesFor(() => tester.pumpWidget(randomCatView));
 
       verify(() => blocCat.add(SearchRandomCat())).called(1);
     });
