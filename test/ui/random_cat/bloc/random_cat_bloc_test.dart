@@ -21,7 +21,7 @@ void main() {
 
     test('initial state of the bloc is [RandomCatStatus.initial]', () {
       expect(RandomCatBloc(catRepository: catRepositoryMock).state,
-          const RandomCatState());
+          const RandomCatState().copyWith());
     });
 
     blocTest<RandomCatBloc, RandomCatState>(
