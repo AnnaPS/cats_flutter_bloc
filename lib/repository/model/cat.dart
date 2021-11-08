@@ -1,3 +1,4 @@
+import 'package:catsapp/repository/model/models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -26,6 +27,6 @@ class Cat extends Equatable {
   @override
   List<Object?> get props => [breeds, id, url, width, height];
 
-  static const empty =
-      Cat(breeds: [Breed()], id: '', url: '', width: 0, height: 0);
+  static const empty = Cat(
+      breeds: [Breed(weight: Weight())], id: '', url: '', width: 0, height: 0);
 }

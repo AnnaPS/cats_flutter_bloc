@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:catsapp/repository/model/cat.dart';
-import 'package:catsapp/repository/model/result_error.dart';
+import 'model/cat.dart';
+import 'model/result_error.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 

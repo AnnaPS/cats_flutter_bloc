@@ -5,8 +5,5 @@ class CatRepository {
   const CatRepository({required this.service});
   final CatService service;
 
-  Future<Cat> search() async {
-    final result = await service.search();
-    return result;
-  }
+  Future<Cat> search() async => service.search();
 }

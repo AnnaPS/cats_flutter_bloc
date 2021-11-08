@@ -59,8 +59,12 @@ void main() {
       ' with a copyWith of other cat'
       'state for successful',
       setUp: () {
-        when(() => catMock.breeds)
-            .thenReturn(List.generate(1, (index) => const Breed(id: '1')));
+        when(() => catMock.breeds).thenReturn(
+          List.generate(
+            1,
+            (index) => const Breed(id: '1'),
+          ),
+        );
         when(() => catRepositoryMock.search()).thenAnswer((_) async => catMock);
       },
       build: () => RandomCatBloc(catRepository: catRepositoryMock),
