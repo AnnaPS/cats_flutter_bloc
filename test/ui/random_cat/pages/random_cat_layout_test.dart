@@ -1,5 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:catsapp/ui/random_cat/random_cat.dart';
+import 'package:catsapp/utils/const_keys_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,7 +29,7 @@ void main() {
 
   group('RandomCatPage states ', () {
     testWidgets(
-        'render RandomCatLayout when state is [RandomCatStatus.failure]',
+        'render FailureRandomCatView when state is [RandomCatStatus.failure]',
         (tester) async {
       when(() => blocCat.state).thenReturn(
         const RandomCatState(status: RandomCatStatus.failure),
@@ -44,11 +45,11 @@ void main() {
           ),
         ),
       );
-      expect(find.text('error'), findsOneWidget);
+      expect(find.byKey(const Key(ConstWidgetKeysApp.RandomCatFailure)),
+          findsOneWidget);
     });
 
-    testWidgets(
-        'render RandomCatLayout when state is [RandomCatStatus.loading]',
+    testWidgets('render LoadingView when state is [RandomCatStatus.loading]',
         (tester) async {
       when(() => blocCat.state).thenReturn(
         const RandomCatState(status: RandomCatStatus.loading),
@@ -64,11 +65,12 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      expect(
+          find.byKey(const Key(ConstWidgetKeysApp.CatLoading)), findsOneWidget);
     });
 
     testWidgets(
-        'render RandomCatLayout when state is [RandomCatStatus.success]',
+        'render SuccessRandomCatView when state is [RandomCatStatus.success]',
         (tester) async {
       when(() => blocCat.state).thenReturn(
         const RandomCatState(status: RandomCatStatus.success),
@@ -84,12 +86,12 @@ void main() {
           ),
         ),
       );
-      expect(find.byType(CatCard), findsOneWidget);
-      expect(find.byType(FloatingActionButton), findsOneWidget);
+      expect(find.byKey(const Key(ConstWidgetKeysApp.RandomCatSuccess)),
+          findsOneWidget);
     });
 
     testWidgets(
-        'render RandomCatLayout when state is [RandomCatStatus.initial]',
+        'render InitialRandomCatView when state is [RandomCatStatus.initial]',
         (tester) async {
       when(() => blocCat.state).thenReturn(
         const RandomCatState(status: RandomCatStatus.initial),
@@ -105,12 +107,13 @@ void main() {
           ),
         ),
       );
-      expect(find.text('No information available'), findsOneWidget);
+      expect(find.byKey(const Key(ConstWidgetKeysApp.RandomCatInitial)),
+          findsOneWidget);
     });
   });
 
-  group('tap FAB', () {
-    testWidgets('call to bloc when click on FAB', (tester) async {
+  group('Click on FAB ', () {
+    testWidgets('call to bloc to get next cat', (tester) async {
       when(() => blocCat.state).thenReturn(
         const RandomCatState(status: RandomCatStatus.success),
       );
@@ -134,10 +137,9 @@ void main() {
     });
   });
 
-  group('Call again to SearchRandomCat on BlocListener ', () {
+  group('Call to SearchRandomCat on BlocListener ', () {
     const cat = Cat(id: '1', breeds: [], width: 1, height: 1, url: 'www');
-    testWidgets('Call again to SearchRandomCat when breeds is empty',
-        (tester) async {
+    testWidgets('Call to event when breeds is empty', (tester) async {
       whenListen(
         blocCat,
         Stream<RandomCatState>.fromIterable(

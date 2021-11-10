@@ -1,18 +1,18 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:catsapp/repository/cat_repository.dart' as catRepository;
-import 'package:catsapp/repository/model/cat.dart' as cat;
+import 'package:catsapp/repository/cat_repository.dart';
+import 'package:catsapp/repository/model/cat.dart';
 import 'package:catsapp/ui/random_cat/random_cat.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockRepository extends Mock implements catRepository.CatRepository {}
+class MockRepository extends Mock implements CatRepository {}
 
-class MockCat extends Mock implements cat.Cat {}
+class MockCat extends Mock implements Cat {}
 
 void main() {
   group('RandomCatBloc', () {
-    late catRepository.CatRepository catRepositoryMock;
-    late cat.Cat catMock;
+    late CatRepository catRepositoryMock;
+    late Cat catMock;
 
     setUp(() {
       catRepositoryMock = MockRepository();
@@ -71,9 +71,7 @@ void main() {
       act: (bloc) => bloc.add(SearchRandomCat()),
       expect: () => [
         const RandomCatState(status: RandomCatStatus.loading),
-        RandomCatBloc(catRepository: catRepositoryMock)
-            .state
-            .copyWith(cat: catMock, status: RandomCatStatus.success)
+        RandomCatState(status: RandomCatStatus.success, cat: catMock),
       ],
     );
 

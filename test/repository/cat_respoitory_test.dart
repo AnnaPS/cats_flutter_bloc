@@ -1,10 +1,10 @@
 import 'package:catsapp/repository/cat_repository.dart';
 import 'package:catsapp/repository/model/result_error.dart';
-import 'package:catsapp/repository/service.dart' as cat_service;
+import 'package:catsapp/repository/service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockService extends Mock implements cat_service.CatService {}
+class MockService extends Mock implements CatService {}
 
 class MockErrorSearchingCat extends Mock implements ErrorSearchingCat {}
 
@@ -12,7 +12,7 @@ class MockErrorEmptyResponse extends Mock implements ErrorEmptyResponse {}
 
 void main() {
   group('Cat Repository', () {
-    late cat_service.CatService catService;
+    late CatService catService;
     late CatRepository catRepository;
 
     setUp(() {

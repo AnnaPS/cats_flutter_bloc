@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:catsapp/repository/model/breed.dart';
 import 'package:catsapp/repository/model/cat.dart';
 import 'package:catsapp/repository/model/result_error.dart';
-import 'package:catsapp/repository/model/weight.dart';
 import 'package:catsapp/repository/service.dart';
 import 'package:catsapp/utils/test_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -91,42 +89,6 @@ void main() {
         expect(
           Cat.fromJson(jsonDecode(json)[0]),
           isA<Cat>(),
-        );
-      });
-
-      test('return a correct Cat on a valid response', () async {
-        final response = MockResponse();
-
-        when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn(json);
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-
-        final result = await catService.search();
-        expect(
-          result,
-          isA<Cat>()
-              .having((cat) => cat.url, 'url',
-                  'https://cdn2.thecatapi.com/images/MuEGe1-Sz.jpg')
-              .having((cat) => cat.width, 'width', 3000)
-              .having((cat) => cat.height, 'height', 2002)
-              .having((cat) => cat.id, 'id', 'MuEGe1-Sz')
-              .having(
-            (cat) => cat.breeds,
-            'breeds',
-            [
-              isA<Breed>()
-                  .having((breed) => breed.name, 'name', 'American Shorthair')
-                  .having((breed) => breed.id, 'id', 'asho')
-                  .having(
-                    (breed) => breed.weight,
-                    'weight',
-                    isA<Weight>()
-                        .having(
-                            (weight) => weight.imperial, 'imperial', '8 - 15')
-                        .having((weight) => weight.metric, 'metric', '4 - 7'),
-                  )
-            ],
-          ),
         );
       });
     });

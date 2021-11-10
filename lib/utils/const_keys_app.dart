@@ -6,4 +6,8 @@ class ConstWidgetKeysApp {
   static const String RandomCatCardDescription =
       'random_cat_card_description_key';
   static const String RandomCatCardWeight = 'random_cat_card_weight_key';
+  static const String RandomCatFailure = 'random_cat_failure';
+  static const String CatLoading = 'cat_loading';
+  static const String RandomCatSuccess = 'random_cat_success';
+  static const String RandomCatInitial = 'random_cat_initial';
 }
