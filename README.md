@@ -35,4 +35,4 @@ If you want to participate in this part feel free to do it, open a new PR :)
 
 ## Medium docs
 
-Part one: 
+Part one: https://medium.com/@ana.polo.sanchez1991/how-can-i-start-with-flutter-testing-part-one-a51aaefdb6a2
