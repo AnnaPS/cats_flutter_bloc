@@ -1,5 +1,5 @@
-class TestHelper {
-  final searchCatJsonResponse = '[{'
+abstract class TestHelper {
+  static const searchCatJsonResponse = '[{'
       '"breeds":[{"weight":{"imperial":"8 - 15","metric":"4 - 7"},'
       '"id":"asho","name":"American Shorthair",'
       '"cfa_url":"http://cfa.org/Breeds/BreedsAB/AmericanShorthair.aspx",'

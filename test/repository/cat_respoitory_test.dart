@@ -6,10 +6,6 @@ import 'package:mocktail/mocktail.dart';
 
 class MockService extends Mock implements CatService {}
 
-class MockErrorSearchingCat extends Mock implements ErrorSearchingCat {}
-
-class MockErrorEmptyResponse extends Mock implements ErrorEmptyResponse {}
-
 void main() {
   group('Cat Repository', () {
     late CatService catService;
@@ -36,7 +32,7 @@ void main() {
 
       test('throws Result exception when search fails', () async {
         // first create a exception mock instance
-        final exception = MockErrorSearchingCat();
+        final exception = ErrorSearchingCat();
         // when calls and api and throw an exception
         when(() => catService.search()).thenThrow(exception);
         // then expect an error result
