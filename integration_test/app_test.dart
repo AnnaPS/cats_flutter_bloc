@@ -40,16 +40,6 @@ void main() {
       await tester.getNextCat();
       expect(find.byType(LoadingView), findsOneWidget);
     });
-
-    // testWidgets('get next cat', (tester) async {
-    //   await tester.pumpApp();
-    //
-    //   await tester.getNextCat();
-    //   expect(find.byType(LoadingView), findsOneWidget);
-    //   tester.state(find.byKey(const Key(ConstWidgetKeysApp.RandomCatSuccess)));
-    //   expect(find.byType(SuccessRandomCatView), findsOneWidget);
-    // });
-
     testWidgets('get next cat', (tester) async {
       when(() => blocCat.state).thenReturn(
         const RandomCatState(status: RandomCatStatus.success),
@@ -60,39 +50,6 @@ void main() {
       await tester.getNextCat();
       verify(() => blocCat.add(SearchRandomCat())).called(1);
     });
-
-    // testWidgets('renders correct initial state', (tester) async {
-    //   await tester.pumpApp();
-    //
-    //   expect(find.byKey(const Key(ConstWidgetKeysApp.RandomCatInitial)),
-    //       findsOneWidget);
-    // });
-
-    // testWidgets('tapping increment button updates the count', (tester) async {
-    //   await tester.pumpApp();
-    //
-    //   await tester.incrementCounter();
-    //   expect(find.text('1'), findsOneWidget);
-    //
-    //   await tester.incrementCounter();
-    //   expect(find.text('2'), findsOneWidget);
-    //
-    //   await tester.incrementCounter();
-    //   expect(find.text('3'), findsOneWidget);
-    // });
-    //
-    // testWidgets('tapping decrement button updates the count', (tester) async {
-    //   await tester.pumpApp();
-    //
-    //   await tester.decrementCounter();
-    //   expect(find.text('-1'), findsOneWidget);
-    //
-    //   await tester.decrementCounter();
-    //   expect(find.text('-2'), findsOneWidget);
-    //
-    //   await tester.decrementCounter();
-    //   expect(find.text('-3'), findsOneWidget);
-    // });
   });
 }
 
