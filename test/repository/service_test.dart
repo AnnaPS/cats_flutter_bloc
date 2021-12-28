@@ -14,15 +14,10 @@ class MockResponse extends Mock implements http.Response {}
 
 class FakeUri extends Fake implements Uri {}
 
-class MockErrorSearchingCat extends Mock implements ErrorSearchingCat {}
-
-class MockErrorEmptyResponse extends Mock implements ErrorEmptyResponse {}
-
 void main() {
   group('Service', () {
     late CatService catService;
     late MockHttp httpClient;
-    late String json;
 
     setUpAll(() {
       registerFallbackValue(FakeUri());
@@ -31,7 +26,6 @@ void main() {
     setUp(() {
       httpClient = MockHttp();
       catService = CatService(httpClient: httpClient);
-      json = TestHelper().searchCatJsonResponse;
     });
 
     group('constructor', () {
@@ -41,15 +35,23 @@ void main() {
     });
 
     group(('catSearch'), () {
-      test('make correct http request', () async {
+      test(
+          'make correct http request with empty response,'
+          ' throw [ErrorEmptyResponse]', () async {
         final response = MockResponse();
 
         when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn('[]');
+        when(() => response.body).thenReturn('');
         when(() => httpClient.get(any())).thenAnswer((_) async => response);
         try {
           await catService.search();
-        } catch (_) {}
+          fail('should throw error empty body');
+        } catch (error) {
+          expect(
+            error,
+            isA<ErrorEmptyResponse>(),
+          );
+        }
         verify(
           () => httpClient.get(
             Uri.parse(
@@ -70,24 +72,15 @@ void main() {
         );
       });
 
-      test('throws ResultError on empty response', () async {
-        final response = MockResponse();
-        when(() => response.statusCode).thenReturn(200);
-        when(() => response.body).thenReturn('');
-        when(() => httpClient.get(any())).thenAnswer((_) async => response);
-        expect(
-          catService.search(),
-          throwsA(
-            isA<ErrorEmptyResponse>(),
-          ),
-        );
-      });
-
       test('return Cat.json on a valid response', () async {
         final response = MockResponse();
         when(() => response.statusCode).thenReturn(200);
+        when(() => response.body).thenReturn(TestHelper.searchCatJsonResponse);
+        when(() => httpClient.get(any())).thenAnswer((_) async => response);
+
+        await catService.search();
         expect(
-          Cat.fromJson(jsonDecode(json)[0]),
+          Cat.fromJson(jsonDecode(response.body)[0]),
           isA<Cat>(),
         );
       });

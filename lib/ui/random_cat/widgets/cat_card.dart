@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import '../../../catapp_theme.dart';
 
 class CatCard extends StatelessWidget {
-  const CatCard({Key? key, required this.cat}) : super(key: key);
+  const CatCard({
+    Key? key,
+    required this.cat,
+  }) : super(key: key);
 
   final Cat cat;
 
