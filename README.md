@@ -18,7 +18,7 @@ If you want to participate in this part feel free to do it, open a new PR 😊
 
 ## Medium docs
 
-[Unit, bloc and widget test](https://medium.com/@ana.polo.sanchez1991/how-can-i-start-with-flutter-testing-part-one-a51aaefdb6a2)
-[Integration test](https://medium.com/flutter-community/test-integration-with-flutter-part-one-401008eab5c7)
+- [Unit, bloc and widget test](https://medium.com/@ana.polo.sanchez1991/how-can-i-start-with-flutter-testing-part-one-a51aaefdb6a2)
+- [Integration test](https://medium.com/flutter-community/test-integration-with-flutter-part-one-401008eab5c7)
 
 Happy coding!💙
