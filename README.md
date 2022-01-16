@@ -1,38 +1,24 @@
 # Cats Flutter
 
-This repository is an open-source project to learn flutter testing. 
+This repository is an open-source project to learn flutter testing. 🧪
 
-## First part
+## Project
 
 I have created a randomize visualizer of cats using https://thecatapi.com/ to get the cats.
+
 Tested parts:
 
 - Unit testing to repository and service class.
 - Bloc testing 
 - Widget testing.
+- Integration test.
 
-## Second part
 
-The idea is to use the same api to do a page with a random cat list and have a navigation to a detail page. 
-Tests to do:
-
-- Unit testing
-- Bloc testing
-- Widget testing
-
-If you want to participate in this part feel free to do it, open a new PR :) 
-
-## Third part
-
-The idea is to have a profile page with some options to enable/disable, for example, use dark or light theme, add some animation to test it and more.
-Tests to do:
-
-- Unit testing
-- Bloc testing
-- Widget testing
-
-If you want to participate in this part feel free to do it, open a new PR :) 
+If you want to participate in this part feel free to do it, open a new PR 😊
 
 ## Medium docs
 
-Part one: https://medium.com/@ana.polo.sanchez1991/how-can-i-start-with-flutter-testing-part-one-a51aaefdb6a2
+[Unit, bloc and widget test](https://medium.com/@ana.polo.sanchez1991/how-can-i-start-with-flutter-testing-part-one-a51aaefdb6a2)
+[Integration test](https://medium.com/flutter-community/test-integration-with-flutter-part-one-401008eab5c7)
+
+Happy coding!💙
